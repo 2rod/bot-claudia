@@ -33,3 +33,20 @@ passport.use(new GithubStrategy({
 		done(e, null);
 	});
 }));
+
+const FacebookStrategy = require("passport-facebook").Strategy;
+passport.use(new FacebookStrategy({
+	clientID: config.site.oauth.facebook.clientID,
+	clientSecret: config.site.oauth.facebook.clientSecret,
+	callbackURL: `${config.site.oauth.host}${port}/auth/facebook/callback`
+}, (token, tokenSecret, profile, done) => {
+	// retrieve user ...
+	co(function* auth() {
+		// do some async/yield stuff here to get/set profile data
+		done(null, profile);
+	}).catch(function onError(e) {
+		console.error("Something went terribly wrong!");
+		console.error(e.stack);
+		done(e, null);
+	});
+}));

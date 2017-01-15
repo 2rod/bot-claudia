@@ -29,3 +29,27 @@ hbs.registerHelper("has_analytics", function has_analytics(opts) {
 	const fnFalse = opts.inverse;
 	return (config.site.analytics && config.site.analytics !== false) ? fnTrue() : fnFalse();
 });
+
+hbs.registerHelper("has_fb_sdk", function has_fb_sdk(opts) {
+	const fnTrue = opts.fn;
+	const fnFalse = opts.inverse;
+	return (config.site.fb_sdk && config.site.fb_sdk.enable !== false) ? fnTrue() : fnFalse();
+});
+
+hbs.registerHelper("get_fb_page_name", (opts) => {
+	if (config.site.fb_sdk.enable) {
+		return config.site.fb_sdk.fb_page_name;
+	}
+});
+
+hbs.registerHelper("get_fb_page_title", (opts) => {
+	if (config.site.fb_sdk.enable) {
+		return config.site.fb_sdk.fb_page_title;
+	}
+});
+
+hbs.registerHelper("get_fb_app_id", (opts) => {
+	if (config.site.fb_sdk.enable) {
+		return config.site.fb_sdk.fb_app_id;
+	}
+});

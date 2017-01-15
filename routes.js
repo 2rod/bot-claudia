@@ -24,9 +24,18 @@ routes.get("/account", account.index);
 routes.get("/auth/github",
 	passport.authenticate("github")
 );
+routes.get("/auth/facebook",
+	passport.authenticate("facebook")
+);
 
 routes.get("/auth/github/callback",
 	passport.authenticate("github", {
+		successRedirect: "/account",
+		failureRedirect: "/"
+	})
+);
+routes.get("/auth/facebook/callback",
+	passport.authenticate("facebook", {
 		successRedirect: "/account",
 		failureRedirect: "/"
 	})
