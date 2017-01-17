@@ -53,3 +53,9 @@ hbs.registerHelper("get_fb_app_id", (opts) => {
 		return config.site.fb_sdk.fb_app_id;
 	}
 });
+
+hbs.registerHelper("get_fb_page_id", (opts) => {
+	if (config.site.fb_sdk.enable) {
+		return config.site.fb_sdk.fb_page_id;
+	}
+});
