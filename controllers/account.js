@@ -24,5 +24,5 @@ module.exports.index = function* index() {
 	} else {
 		return this.redirect("/");
 	}
-	yield this.render("account", {title: config.site.name, user: JSON.stringify(user, null, 2)});
+	yield this.render("account", {title: config.site.name, user: JSON.stringify(user, null, 2), userObj: user});
 };
