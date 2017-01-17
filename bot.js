@@ -8,7 +8,7 @@ const fbTemplate = require('claudia-bot-builder').fbTemplate;
 const generic = new fbTemplate.Generic();
 
 let user = { first_name: 'Claudio'};
-let medical_id = '';
+// let medical_id = '';
 
 const helpMsg = {
   attachment: {
@@ -138,7 +138,7 @@ const idMsgTest = (message) => {
 
 const claudiaBot = (message, origApiRequest) => {
   // origApiRequest.lambdaContext.callbackWaitsForEmptyEventLoop = false;
-  let medical_id = '';
+  // let medical_id = '';
   // const user = {};
   // check for user record
   // const route = `${api_endpoint}/user/external/${external_id}`;
