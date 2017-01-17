@@ -7,7 +7,7 @@ const fbTemplate = require('claudia-bot-builder').fbTemplate;
 
 const generic = new fbTemplate.Generic();
 
-let user = { first_name: 'Claudio'};
+const user = { first_name: 'Claudio'};
 // let medical_id = '';
 
 const helpMsg = {
@@ -153,7 +153,7 @@ const claudiaBot = (message, origApiRequest) => {
     console.log('message:', message);
     switch (message.text) {
     case 'GET_STARTED':
-      return verifyUserMsg(user);
+      return verifyUserMsg();
       // return welcomeMsg;
       break;
     case 'NOT_ME':
