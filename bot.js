@@ -1,14 +1,14 @@
 const botBuilder = require('claudia-bot-builder');
+const axios = require('axios');
 // const apiBotMonkey = require('./helpers/api');
 
-const api_endpoint = 'http://localhost:5000';
+const api_endpoint = 'https://iztrujvjzn.localtunnel.me';
 
 const fbTemplate = require('claudia-bot-builder').fbTemplate;
 
 const generic = new fbTemplate.Generic();
 
-const user = { first_name: 'Claudio'};
-// let medical_id = '';
+const user = {};
 
 const helpMsg = {
   attachment: {
@@ -130,31 +130,58 @@ const receivedIdMsg = 'Thank you. Give me a few moments to find your medical rec
 const deNadaMsg = 'You\'re welcome! Thank you for your patience!';
 
 const idMsgTest = (message) => {
-  if (!isNaN(parseInt(message.text)) && message.text.length === 8) {
+  const regexTest = /^\d{8}$/;
+  if (regexTest.test(message.text)) {
     return receivedIdMsg;
   }
   return 'I\'m sorry. ' + message.text + ' is not a valid medical ID. It should be 8 digits in length and consist only of numbers. Please try again.';
 };
 
-const claudiaBot = (message, origApiRequest) => {
-  // origApiRequest.lambdaContext.callbackWaitsForEmptyEventLoop = false;
-  // let medical_id = '';
-  // const user = {};
-  // check for user record
-  // const route = `${api_endpoint}/user/external/${external_id}`;
-  // console.log('route:', route);
-  // user = callApi(path);
-  // if (user) medical_id = user.medical_id;
-  // console.log('user:', user);
+const callApi = (route, data) => {
+  axios.get(route)
+  .then((response) => {
+    console.log('api call response', response.data);
+    if (response.status === 200) {
+      parseUserData(response.data);
+      return response.data;
+    }
+    console.log('Bad network response: ', response.status, ' ', response.statusText);
+  })
+  .catch((error) => {
+    if (error.response) {
+      // The request was made, but the server responded with a status code
+      // that falls out of the range of 2xx
+      console.log('There was an error in the response: ', error.response.data);
+      console.log('Response Status: ', error.response.status);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('There was a problem with this request: ', error.message);
+    }
+  });
+};
 
+const parseUserData = (data) => {
+  user.facebook_id = data.external_id;
+  user.medical_number = data.medical_number;
+  user._id =  data._id;
+  user.first_name = data.first_name;
+  user.last_name = data.last_name;
+  user.phone = data.phone;
+  user.email = data.email;
+  console.log('user after parsing response data: ', user);
+  return user;
+};
+
+const claudiaBot = (message, origApiRequest) => {
   if (message.type === 'facebook') {
-    // const external_id = message.sender;
-    // console.log('external_id:', external_id);
     console.log('message:', message);
     switch (message.text) {
     case 'GET_STARTED':
+      const external_id = message.sender;
+      const route = `${api_endpoint}/user/external/${external_id}`;
+      // retrieve user record
+      callApi(route);
       return verifyUserMsg();
-      // return welcomeMsg;
       break;
     case 'NOT_ME':
       return notMeMsg;
@@ -196,24 +223,8 @@ const claudiaBot = (message, origApiRequest) => {
         break;
       }
       return welcomeMsg;
-      // return welcomeMsg(external_id);
     }
   }
 };
-
-// const callApi = function* (route, data = {}) {
-//   // fetch(route, headers)
-//   yield axios.get(route)
-//   .then((response) => {
-//     console.log('api call response', response);
-//     if (response.ok) return response.json();
-//     console.log('Bad network response');
-//   })
-//   .catch((error) => {
-//     // display error
-//     console.log('There was a problem with this API call.');
-//     return { err: error };
-//   });
-// };
 
 module.exports = botBuilder(claudiaBot, { platforms: ['facebook'] });
