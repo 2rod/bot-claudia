@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/snollygolly/koa-starter#readme",
   "dependencies": {
+    "axios": "^0.15.3",
     "claudia-bot-builder": "^2.12.0",
     "co": "^4.6.0",
     "huh": "^2.0.1",
