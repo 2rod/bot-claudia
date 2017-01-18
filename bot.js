@@ -172,6 +172,14 @@ const parseUserData = (data) => {
   return user;
 };
 
+const setUserProp = (prop, status) => {
+  user[prop] = status;
+};
+
+const getUserProp = (prop) => {
+  return user[prop];
+};
+
 const claudiaBot = (message, origApiRequest) => {
   if (message.type === 'facebook') {
     // console.log('message:', message);
