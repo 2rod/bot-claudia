@@ -174,8 +174,9 @@ const parseUserData = (data) => {
 
 const claudiaBot = (message, origApiRequest) => {
   if (message.type === 'facebook') {
-    console.log('message:', message);
-    switch (message.text) {
+    // console.log('message:', message);
+    const request = message.text;
+    switch (request) {
     case 'GET_STARTED':
       const external_id = message.sender;
       const route = `${api_endpoint}/user/external/${external_id}`;
