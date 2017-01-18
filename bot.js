@@ -41,7 +41,7 @@ const welcomeMsg = new fbTemplate.Text('What would you like to do today?')
     .addQuickReply('Get Help', 'HELP')
   .get();
 
-const verifyUserMsg = () => {
+const checkInUserMsg = () => {
   const name = user.first_name;
   if (name) {
     return new fbTemplate.Text('Welcome back, ' + name + '! What would you like to do today?')
@@ -182,7 +182,7 @@ const claudiaBot = (message, origApiRequest) => {
       const route = `${api_endpoint}/user/external/${external_id}`;
       // retrieve user record
       callApi(route);
-      return verifyUserMsg();
+      return checkInUserMsg;
       break;
     case 'NOT_ME':
       return notMeMsg;
