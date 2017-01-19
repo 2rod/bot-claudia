@@ -2,7 +2,7 @@ const botBuilder = require('claudia-bot-builder');
 const axios = require('axios');
 // const apiBotMonkey = require('./helpers/api');
 
-const api_endpoint = 'https://iztrujvjzn.localtunnel.me';
+const api_endpoint = 'https://botmonkey.herokuapp.com/';
 
 const fbTemplate = require('claudia-bot-builder').fbTemplate;
 
