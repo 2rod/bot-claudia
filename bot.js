@@ -190,7 +190,7 @@ const claudiaBot = (message, origApiRequest) => {
       const route = `${api_endpoint}/user/external/${external_id}`;
       // retrieve user record
       callApi(route);
-      return checkInUserMsg;
+      return checkInUserMsg();
       break;
     case 'NOT_ME':
       return notMeMsg;
